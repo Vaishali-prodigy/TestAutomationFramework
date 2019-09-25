@@ -18,7 +18,12 @@ public class CapabilitiesGenerator {
 	
 	WebDriver driver = null;
 
+	  public static final String USERNAME = "vaishalikatta1";
+	  public static final String AUTOMATE_KEY = "exixicaC9QHJNZZWYEWn";
+	  public static final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
+	
 	private String browserType = ObjectRepository.getString("global.browser.name");
+	
 	
 	private CapabilitiesGenerator() {
 	}
@@ -87,7 +92,8 @@ public class CapabilitiesGenerator {
 		switch (platformType) {
 		case "Android":
 			DesiredCapabilities getcap = getmobileCapabilities(platformType);
-			driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"),getcap);
+			//driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"),getcap);
+				driver = new AndroidDriver<MobileElement>(new URL(URL),getcap);
 			break;
 		case "iOS":
 			driver = new IOSDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"),getmobileCapabilities(platformType));
@@ -114,6 +120,7 @@ public class CapabilitiesGenerator {
 	     
 	        cap.setCapability("appPackage", ObjectRepository.getString("global.capability.apppackage"));
 	        cap.setCapability("appActivity",ObjectRepository.getString("global.capability.appactivity"));
+		cap.setCapability("app","bs://6f00f2175be1be9d969d367c992ca2a0f74e6ced");
 	        
 	        cap.setCapability("skipUnlock","true");
 	        cap.setCapability("noReset","false");
