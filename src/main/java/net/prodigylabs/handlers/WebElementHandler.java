@@ -44,6 +44,11 @@ public class WebElementHandler {
 		driver.findElement(By.xpath(locator)).sendKeys(text);
 	}
 	
+	public void enterText(By locator, String text) {
+		setDriverWait(locator);
+		driver.findElement(locator).sendKeys(text);
+	}
+	
 	public boolean isDisplayed(String locator) {
 		setDriverWait(locator);
 		return driver.findElement(By.xpath(locator)).isDisplayed();
@@ -83,5 +88,9 @@ public class WebElementHandler {
 		} else {
 			throw new Exception("Unable to locate dropdown element");
 		}
+	}
+	
+	public void waitforinvisibilityofElement(By locator) throws Exception {
+		driverWait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
 	}
 }
