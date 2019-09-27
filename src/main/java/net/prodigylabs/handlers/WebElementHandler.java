@@ -2,6 +2,7 @@ package net.prodigylabs.handlers;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,6 +14,7 @@ public class WebElementHandler {
 	
 	protected WebDriver driver = null;
 	WebDriverWait driverWait = null;
+	private boolean flag = false;
 	
 	public WebElementHandler(WebDriver webdriver)
 	{
@@ -46,7 +48,16 @@ public class WebElementHandler {
 	
 	public void enterText(By locator, String text) {
 		setDriverWait(locator);
-		driver.findElement(locator).sendKeys(text);
+		WebElement we = driver.findElement(locator);
+		if (we!=null) {
+			we.sendKeys(text);
+		}		
+	}
+	
+	public String getText(By locator) {
+		setDriverWait(locator);
+		String text = driver.findElement(locator).getText();
+		return text;
 	}
 	
 	public boolean isDisplayed(String locator) {
@@ -54,9 +65,21 @@ public class WebElementHandler {
 		return driver.findElement(By.xpath(locator)).isDisplayed();
 	}
 	
-	public boolean isDisplayed(By locator) {
-		setDriverWait(locator);
-		return driver.findElement(locator).isDisplayed();
+	public boolean isDisplayed(By locator) throws Exception {
+		setDriverWait(locator);		
+		WebElement we = driver.findElement(locator);
+		if (we!=null) {
+			for(int i=0; i<=5;i++){
+				  try{
+				     flag = we.isDisplayed();
+				     break;
+				  }
+				  catch(Exception e){
+					     throw new Exception("ELement is not displayed "+locator);
+					  }
+				  }
+		}
+		return flag;
 	}
 	
 	public Select getDropDown(By locator) throws Exception {
