@@ -69,7 +69,7 @@ public class WebElementHandler {
 		setDriverWait(locator);		
 		WebElement we = driver.findElement(locator);
 		if (we!=null) {
-			for(int i=0; i<=5;i++){
+			for(int i=0; i<=10;i++){
 				  try{
 				     flag = we.isDisplayed();
 				     break;
